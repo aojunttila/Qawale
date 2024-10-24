@@ -1,4 +1,4 @@
-//package Utils;
+//package Utils
 import javax.swing.*;
 import java.awt.*;
 import java.awt.image.BufferedImage;
