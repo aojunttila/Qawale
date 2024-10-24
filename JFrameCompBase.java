@@ -11,7 +11,7 @@ public class JFrameCompBase extends JComponent{
     int sidething=0;
     JFrameImage img;
     Graphics2D g2;
-    BufferedImage image,image2,imageOverlay;
+    BufferedImage image,image2;
     BufferedImage bufferImage;
     Graphics2D bufferG;
     int width;
@@ -32,22 +32,28 @@ public class JFrameCompBase extends JComponent{
         panel = panel2;
         g2=(Graphics2D)panel.getGraphics();
         //System.out.println(""""hi"""");
+        BufferedImage[]imageList = new BufferedImage[3];
         try {
-            image = ImageIO.read(new File("apple.jpg"));
-            image2 = ImageIO.read(new File("apple2.jpg"));
-            imageOver=true;
-            if(imageOver){imageOverlay = ImageIO.read(new File("vignette.png"));}
-
+            imageList[0] = ImageIO.read(new File("apple.jpg"));
+            imageList[1] = ImageIO.read(new File("tetris1.png"));
+            imageList[2] = ImageIO.read(new File("tetris2.png"));
         } catch (Exception e) {}
         
-        for(int i=0;i<elementList.length;i++){
+        Board board = new Board(imageList);
+        JFrameImage[]boardImages = board.getImages();
+        System.out.println(boardImages.length);
+        for(int i=0;i<boardImages.length;i++){
+            elementList[i]=boardImages[i];
+        }
+
+        //for(int i=0;i<elementList.length;i++){
             //if(rand.nextInt(2)==0){
-            elementList[i]=new JFrameImage(rand.nextInt(3000)-750,rand.nextInt(2000)-500,1+(int)Math.pow((double)i,2)/80000,1+(int)Math.pow((double)i,2)/80000,0,image); 
-            int thingx=rand.nextInt(width+100);int thingy=rand.nextInt(height);
-            polyList[i]=new JFramePolygon(new int[]{thingx,thingx+rand.nextInt(100),thingx+rand.nextInt(100)},new int[]{thingy,thingy+rand.nextInt(50)+25,thingy+rand.nextInt(50)+25},new Color(0,0,0),new Color(rand.nextInt(150),rand.nextInt(150),rand.nextInt(150)),(float)3); 
+            //elementList[i]=new JFrameImage(rand.nextInt(3000)-750,rand.nextInt(2000)-500,1+(int)Math.pow((double)i,2)/80000,1+(int)Math.pow((double)i,2)/80000,0,image); 
+            //int thingx=rand.nextInt(width+100);int thingy=rand.nextInt(height);
+            //polyList[i]=new JFramePolygon(new int[]{thingx,thingx+rand.nextInt(100),thingx+rand.nextInt(100)},new int[]{thingy,thingy+rand.nextInt(50)+25,thingy+rand.nextInt(50)+25},new Color(0,0,0),new Color(rand.nextInt(150),rand.nextInt(150),rand.nextInt(150)),(float)3); 
             //}else{elementList[i]=new JFrameImage(rand.nextInt(1500),rand.nextInt(1000),rand.nextInt(100)+1,rand.nextInt(100)+1,rand.nextInt(200),image2); }
             //elementList[i]=new JFrameImage(500, 500, 100, 100, 10, image); 
-        }
+        //}
         //testEmitter=new JFrameParticleImage(new int[]{200,700,900,0,180,10,5,2,30,30,99,120,100},false,image2);
         //testEmitter2=new JFrameParticlePolygon(new int[]{500,500,0,1000,90,360,20,10,98,120,300},new int[]{0,10,10},new int[]{0,-30,20},Color.RED,Color.BLUE,true,image2);
         //testpoly=new JFramePolygon(new int[]{20,200,400},new int[]{-30,500,100},new Color(105,0,150),new Color(10,10,50),(float)10);
@@ -90,7 +96,6 @@ public class JFrameCompBase extends JComponent{
         }
         
     }
-    if(imageOver){bufferG.drawImage(imageOverlay,0,0,width,height,null);}
     
     
    }
@@ -103,9 +108,9 @@ public class JFrameCompBase extends JComponent{
     for(int i=0;i<elementList.length;i++){
         if(elementList[i]!=null){
             //x=elementList[i].getXPos();y=elementList[i].getYPos();
-            polyList[i].movePos(rand.nextInt(5),0);
-            if(polyList[i].getX()>width){polyList[i].setPos(-100,polyList[i].getY());}
-            elementList[i].setPos((int)(elementList[i].ogX+(mouseX-(width/2))/(1+(float)elementList[i].getXScale()/20)),(int)(elementList[i].ogY+(mouseY-(height/2))/(1+(float)elementList[i].getYScale()/20)));
+            //polyList[i].movePos(rand.nextInt(5),0);
+            //if(polyList[i].getX()>width){polyList[i].setPos(-100,polyList[i].getY());}
+            //elementList[i].setPos((int)(elementList[i].ogX+(mouseX-(width/2))/(1+(float)elementList[i].getXScale()/20)),(int)(elementList[i].ogY+(mouseY-(height/2))/(1+(float)elementList[i].getYScale()/20)));
             //elementList[i].changePos(rand.nextInt(3)-1,rand.nextInt(3)-1);
             //if(mouseDown){elementList[i].changePos(mouseX>x?1:-1,mouseY>y?1:-1);}
             //if(elementList[i].getYPos()>h2){elementList[i].setPos(-1,0);}

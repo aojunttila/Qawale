@@ -19,6 +19,15 @@ public class JFrameImage extends JComponent
   float alpha=1;
   //AffineTransform at;
 
+  /**
+   * Constructs an image
+   * @param posx
+   * @param posy
+   * @param xWidth
+   * @param yWidth
+   * @param rotation2
+   * @param image2
+   */
   public JFrameImage(int posx,int posy,int xWidth,int yWidth,int rotation2, BufferedImage image2)
   {
     xpos=posx;ypos=posy;
