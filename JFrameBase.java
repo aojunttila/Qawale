@@ -25,6 +25,7 @@ public class JFrameBase extends JFrame{
   int mouseX=0;
   int mouseY=0;
   JFrameCompBase comp;
+  boolean mouseDownQ = false;
   ArrayList<Float>frametimes=new ArrayList<Float>(); 
   //Canvas canvas=new Canvas(w,h);
     public JFrameBase(){
@@ -58,6 +59,8 @@ public class JFrameBase extends JFrame{
 
         if(framecount>1){ut.startTimer();}
         comp.nextFrame(mouseX,mouseY,mouseDown);comp.repaint();
+        //System.out.println(mouseDown);
+        if(mouseDownQ){mouseDownQ=false;mouseDown=false;}
         if(framecount>1){frametimes.add(ut.stopTimer(false));}
         framecount+=1;
         //System.out.println(mouseX+" "+mouseY);
@@ -84,7 +87,7 @@ public class JFrameBase extends JFrame{
     });
     panel.addMouseListener(new MouseAdapter(){
       public void mousePressed(MouseEvent e){mouseDown=true;panel.requestFocusInWindow();}
-      public void mouseReleased(MouseEvent e){mouseDown=false;}});
+      public void mouseReleased(MouseEvent e){mouseDownQ=true;}});
       panel.addMouseMotionListener(new MouseAdapter(){
       public void mouseMoved(MouseEvent e){mouseX=e.getX();mouseY=e.getY();}
       public void mouseDragged(MouseEvent e){mouseX=e.getX();mouseY=e.getY();}});
@@ -111,6 +114,8 @@ public class JFrameBase extends JFrame{
           lastTime = now;
           while(delta >= 1){
             comp.nextFrame(mouseX,mouseY,mouseDown);comp.repaint();
+            
+            
               delta--;
               }
           } 

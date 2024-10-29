@@ -23,6 +23,7 @@ public class JFrameCompBase extends JComponent{
     JFramePolygon[]polyList=new JFramePolygon[2000];
     JFrameParticleImage testEmitter;
     JFrameParticlePolygon testEmitter2;
+    Board board;
     public JFrameCompBase(JPanel panel2,int w,int h){
         width=w;height=h;
         bufferImage = new BufferedImage(width, height, BufferedImage.TYPE_INT_RGB);
@@ -32,20 +33,16 @@ public class JFrameCompBase extends JComponent{
         panel = panel2;
         g2=(Graphics2D)panel.getGraphics();
         //System.out.println(""""hi"""");
-        BufferedImage[]imageList = new BufferedImage[3];
+        BufferedImage[]imageList = new BufferedImage[4];
         try {
             imageList[0] = ImageIO.read(new File("apple.jpg"));
-            imageList[1] = ImageIO.read(new File("tetris1.png"));
-            imageList[2] = ImageIO.read(new File("tetris2.png"));
+            imageList[1] = ImageIO.read(new File("tan.png"));
+            imageList[2] = ImageIO.read(new File("red.png"));
+            imageList[3] = ImageIO.read(new File("yellow.png"));
         } catch (Exception e) {}
         
-        Board board = new Board(imageList);
-        JFrameImage[]boardImages = board.getImages();
-        System.out.println(boardImages.length);
-        for(int i=0;i<boardImages.length;i++){
-            elementList[i]=boardImages[i];
-        }
-
+        board = new Board(imageList);
+        refreshBoard();
         //for(int i=0;i<elementList.length;i++){
             //if(rand.nextInt(2)==0){
             //elementList[i]=new JFrameImage(rand.nextInt(3000)-750,rand.nextInt(2000)-500,1+(int)Math.pow((double)i,2)/80000,1+(int)Math.pow((double)i,2)/80000,0,image); 
@@ -63,6 +60,18 @@ public class JFrameCompBase extends JComponent{
         for(int i=0;i<elementList.length;i++){
             if(elementList[i]!=null){panel.add(elementList[i]);}}
         
+    }
+    
+    public void refreshBoard(){
+        System.out.println("1");
+        JFrameImage[]boardImages = board.getImages();
+        System.out.println("2");
+        System.out.println(boardImages.length);
+        for(int i=0;i<boardImages.length;i++){
+            System.out.println("3");
+            elementList[i]=boardImages[i];
+            //panel.add(boardImages[i]);
+        }
     }
 
 
@@ -101,8 +110,25 @@ public class JFrameCompBase extends JComponent{
    }
 
 
-
+   boolean click = false;
    public void nextFrame(int mouseX,int mouseY,boolean mouseDown){
+    //System.out.println(mouseDown);
+    if(mouseDown == true){
+        
+        if(click == false){
+            System.out.println("called mousepos");
+            Stack temp = board.mousePosToStack(mouseX, mouseY);
+            if(temp != null){
+                temp.addPieceBottom(new Piece(Piece.RED));
+                
+                refreshBoard();
+                //elementList[2].changePos(10, 10);
+            }
+            click = true;
+        }
+    }else{
+        click = false;
+    }
     //int x;int y;
     //testpoly.setPoint(2,mouseX,mouseY);
     for(int i=0;i<elementList.length;i++){

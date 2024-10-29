@@ -1,4 +1,3 @@
-
 import java.awt.image.BufferedImage;
 import javax.swing.JComponent;
 import java.awt.*;
